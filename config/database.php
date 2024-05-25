@@ -52,7 +52,7 @@ return [
             'username' => env('DB_USERNAME', 'pfbfosnebe'),
             'password' => env('DB_PASSWORD', '$Vz$hlAaq5NNGKsU'),
             'unix_socket' => env('DB_SOCKET', ''),
-            'mysql_attr_ssl_ca' => env('MYSQL_ATTR_SSL_CA', '/home/site/wwwroot/ssl/DigiCertGlobalRootCA.crt.pem')
+            'mysql_attr_ssl_ca' => env('MYSQL_ATTR_SSL_CA', '/home/site/wwwroot/ssl/DigiCertGlobalRootCA.crt.pem'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

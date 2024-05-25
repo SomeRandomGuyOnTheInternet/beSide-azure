@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Task; // Ensure you have a Task model
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
@@ -13,6 +14,19 @@ Route::middleware('auth')->group(function () {
         return view('dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
 });
+
+//  for /task page ------------------------------------------------------------------------------------------
+// Define the route for /taskcard
+
+Route::get('/taskcard', function () {
+    $tasks = Task::all(); // Fetch all tasks . if i want fetch just one or first one use 'Task::firstOrFail();'  
+
+    return view('taskcard', [
+        'tasks' => $tasks // Pass all tasks to the view
+    ]);
+});
+// ---------------------------------------------------------------------------------------------------------
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

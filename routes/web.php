@@ -1,71 +1,25 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-use App\Models\Task;
-use Illuminate\Http\Request;
-
-/**
-    * Show Task Dashboard
-    */
 Route::get('/', function () {
-    Log::info("Get /");
-    $startTime = microtime(true);
-    // Simple cache-aside logic
-    if (Cache::has('tasks')) {
-        $data = Cache::get('tasks');
-        return view('tasks', ['tasks' => $data, 'elapsed' => microtime(true) - $startTime]);
-    } else {
-        $data = Task::orderBy('created_at', 'asc')->get();
-        Cache::add('tasks', $data);
-        return view('tasks', ['tasks' => $data, 'elapsed' => microtime(true) - $startTime]);
-    }
+    return view('dashboard');
 });
 
-/**
-    * Add New Task
-    */
-Route::post('/task', function (Request $request) {
-    Log::info("Post /task");
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|max:255',
-    ]);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-    if ($validator->fails()) {
-        Log::error("Add task failed.");
-        return redirect('/')
-            ->withInput()
-            ->withErrors($validator);
-    }
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    $task = new Task;
-    $task->name = $request->name;
-    $task->save();
-    // Clear the cache
-    Cache::flush();
-
-    return redirect('/');
+    // Routes for creating a task
+    Route::get('/dashboard/create-task', [TaskController::class, 'create'])->name('tasks.create');
+    Route::post('/dashboard/create-task', [TaskController::class, 'store'])->name('tasks.store');
 });
 
-/**
-    * Delete Task
-    */
-Route::delete('/task/{id}', function ($id) {
-    Log::info('Delete /task/'.$id);
-    Task::findOrFail($id)->delete();
-    // Clear the cache
-    Cache::flush();
-
-    return redirect('/');
-});
+require __DIR__.'/auth.php';

@@ -1,49 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Laravel Quickstart - Basic</title>
+    <title>{{ config('app.name', 'beSide') }}</title>
+
+    <link rel="icon" type="image/png" href="{{ asset('beSide-logo.png') }}">
 
     <!-- Fonts -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- Styles -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
-
-    <style>
-        body {
-            font-family: 'Lato';
-        }
-
-        .fa-btn {
-            margin-right: 6px;
-        }
-    </style>
+    <!-- Scripts -->
+    @vite(['resources/bootstrap/bootstrap.css', 'resources/jquery/jquery-3.7.1.min.js','resources/socket/socket.io.js','resources/bootstrap/masonry.pkgd.min.js','resources/bootstrap/bootstrap.bundle.js','resources/css/app.css','resources/js/app.js'])
 </head>
-<body id="app-layout">
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
 
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Task List
-                </a>
-            </div>
+<body class="font-sans antialiased">
+    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        @include('layouts.navigation')
 
-        </div>
-    </nav>
+        <!-- Page Heading -->
+        @if (isset($header))
+            <header class="bg-white dark:bg-gray-800 shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
+        @endif
 
-    @yield('content')
-
-    <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+        <!-- Page Content -->
+        <main>
+            {{$slot}}
+        </main>
+    </div>
 </body>
+
 </html>

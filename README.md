@@ -1,25 +1,21 @@
----
-languages:
-- php
-page_type: sample
-description: "This is a sample application that you can use to follow along with the Build a PHP and MySQL web app in Azure tutorial."
-products:
-- azure
-- azure-app-service
----
+# beSide
 
-# Laravel sample for Azure App Service
+Join beSide, an app for neighborhoods where you can ask for help, buy and sell items, and more.
 
-This is a sample application that you can use to follow along with the tutorial at 
-[Build a PHP and MySQL web app in Azure](https://docs.microsoft.com/azure/app-service/tutorial-php-mysql-app?pivots=platform-linux).
+## Installation
+Subject to change, still need install stuff for database.
+- Install PHP
+- Install Composer
+- Install Node and NPM
+- Install MySQL
 
-This sample application is taken from the official [Laravel sample task list application](https://github.com/laravel/quickstart-basic) and modified minimally to make it work with Azure App Service. For instructions on how to use Laravel, see the official repository.
+## Run
+**Note:** A .env file is needed to run the app. Contact admin for more details.<br>
+Run the following code.
 
-## License
-
-See [LICENSE](LICENSE).
-
-## Contributing
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-  
+> ```
+> cd beSide
+> ```
+> ```
+> php artisan serve
+> ```

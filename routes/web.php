@@ -6,13 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Task; // Ensure you have a Task model
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    });
-
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/', [TaskController::class, 'taskcard'])->name('home');
+    Route::get('/dashboard', [TaskController::class, 'taskcard'])->name('dashboard');
 });
 
 //  for /task page ------------------------------------------------------------------------------------------
@@ -25,6 +20,8 @@ Route::get('/taskcard', function () {
         'tasks' => $tasks // Pass all tasks to the view
     ]);
 });
+Route::get('taskcard', [TaskController::class, 'taskcard'])->name('taskcard');
+Route::get('/taskcard/{id}', [TaskController::class, 'show'])->name('taskcard.show');
 // ---------------------------------------------------------------------------------------------------------
 
 
